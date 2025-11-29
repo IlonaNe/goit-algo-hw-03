@@ -1,5 +1,5 @@
 from pathlib import Path
-
+import argparse
 
 def copy_file(source: Path, destination: Path):
     """Copies a file """
@@ -38,11 +38,25 @@ def sort_copied_files(source: Path, destination: Path):
                 print(f"Error copying {item}: {e}")
 
 
-source_folder = Path("C:/Users/sergi/Downloads/source")
-destination_folder = Path("C:/Users/sergi/Downloads/distination")
+def main():
+    parser = argparse.ArgumentParser(
+        description="Sort and copy files by extension."
+    )
 
-destination_folder.mkdir(exist_ok=True)
+    parser.add_argument("source", type=Path, help="Path to source folder")
+    parser.add_argument("destination", type=Path, help="Path to destination folder")
 
-print("Starting sorting...")
-sort_copied_files(source_folder, destination_folder)
-print("Done!")
+    args = parser.parse_args()
+
+    if not args.source.exists():
+        print(f"Error: source folder '{args.source}' does not exist.")
+        return
+
+    args.destination.mkdir(parents=True, exist_ok=True)
+
+    sort_files(args.source, args.destination)
+    print("Done!")
+
+
+if __name__ == "__main__":
+    main()
