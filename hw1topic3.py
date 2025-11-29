@@ -54,7 +54,7 @@ def main():
 
     args.destination.mkdir(parents=True, exist_ok=True)
 
-    sort_files(args.source, args.destination)
+    sort_copied_files(args.source, args.destination)
     print("Done!")
 
 
